@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat Overlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Live Chat</h2>
+        </div>
+        <div class="chat-box" id="yt-chat-box">
+            <!-- Live chat messages from YouTube API will be injected here -->
+        </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Fungsi untuk mengambil chat YouTube
+        function loadYouTubeChat() {
+            const channelID = 'YOUR_CHANNEL_ID';  // Ganti dengan channel ID kamu
+            const chatBox = document.getElementById('yt-chat-box');
+
+            const url = `https://www.youtube.com/live_chat?v=${channelID}`;
+
+            // Menarik chat dari YouTube API
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Update elemen chat box dengan data chat yang diambil
+                    chatBox.innerHTML = data.messages.map(message => {
+                        return `<div class="message">
+                            <span class="username">${message.username}:</span> ${message.text}
+                        </div>`;
+                    }).join('');
+                });
+        }
+
+        loadYouTubeChat();
+    </script>
+</body>
+</html>
